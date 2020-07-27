@@ -1,9 +1,9 @@
 build_image:
-	docker build -t nyrio_one .
+	docker build -t niryo_one .
 
 create_container:
 	docker run -d \
-	--name nyrio_one \
+	--name niryo_one \
 	--gpus all \
     --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
@@ -13,10 +13,13 @@ create_container:
 	xhost +local:$(docker inspect --format='{{ .Config.Hostname }}' '${containerId}')
 
 delete_container: stop_container
-	docker container rm nyrio_one
+	docker container rm niryo_one
 
 start_container:
-	docker start nyrio_one
+	docker start niryo_one
 
 stop_container:
-	docker stop nyrio_one
+	docker stop niryo_one
+
+attach_bash:
+	docker exec -it niryo_one /bin/bash
