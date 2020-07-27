@@ -3,7 +3,7 @@ build_image:
 
 create_container:
 	docker run -d \
-	--name nyrio_one
+	--name nyrio_one \
 	--gpus all \
     --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
@@ -11,6 +11,9 @@ create_container:
 	nyrio_docker:latest && \
 	containerId=$(docker ps -l -q) && \
 	xhost +local:$(docker inspect --format='{{ .Config.Hostname }}' '${containerId}')
+
+delete_container: stop_container
+	docker container rm nyrio_one
 
 start_container:
 	docker start nyrio_one
