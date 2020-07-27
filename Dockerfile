@@ -40,6 +40,9 @@ RUN apt-get install -y \
 
 RUN rosdep update
 
+RUN touch /root/.bashrc \
+    && echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc
+
 # Niryo dependencies
 RUN apt-get install -y --no-install-recommends \
     ros-kinetic-robot-state-publisher \
@@ -57,12 +60,12 @@ RUN pip install --upgrade pip \
     && pip install jsonpickle
 
 # copy files and compile code
-ADD . /home/niryo/src
+ADD . /home/niryo_one/src
 ENV BASH_ENV /opt/ros/kinetic/setup.bash
 SHELL ["/bin/bash", "-c"]
-WORKDIR /home/niryo
+WORKDIR /home/niryo_one
 RUN "catkin_make"
 
 #define entry point
-RUN chmod +x /home/niryo/src/docker/ros_entrypoint.sh
-ENTRYPOINT [ "/home/niryo/src/docker/ros_entrypoint.sh" ]
+RUN chmod +x /home/niryo_one/src/docker/ros_entrypoint.sh
+ENTRYPOINT [ "/home/niryo_one/src/docker/ros_entrypoint.sh" ]

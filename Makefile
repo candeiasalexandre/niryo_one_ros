@@ -8,7 +8,7 @@ create_container:
     --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-	nyrio_docker:latest && \
+	niryo_one:latest && \
 	containerId=$(docker ps -l -q) && \
 	xhost +local:$(docker inspect --format='{{ .Config.Hostname }}' '${containerId}')
 
@@ -23,3 +23,7 @@ stop_container:
 
 attach_bash:
 	docker exec -it niryo_one /bin/bash
+
+copy_compile:
+	docker cp . niryo_one:/home/niryo_one/src
+	docker exec niryo_one /bin/bash -c "catkin_make"
