@@ -25,5 +25,6 @@ attach_bash:
 	docker exec -it niryo_one /bin/bash
 
 copy_compile:
+	docker exec niryo_one /bin/bash -c "rm -rf /home/niryo_one/src/*"
 	docker cp . niryo_one:/home/niryo_one/src
 	docker exec niryo_one /bin/bash -c "catkin_make"
